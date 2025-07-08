@@ -1,0 +1,613 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Travel Diary with Multi-Page & Dark Mode</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+          <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body class="transition-colors duration-500 bg-white text-indigo-900">
+  <!-- Signup/Login Page -->
+  <div
+    id="authPage"
+    class="min-h-screen w-full flex items-center justify-center p-4 bg-sky-300 relative overflow-hidden"
+  >
+    <img
+      alt="Background image with blue sky, white clouds, dotted flight paths, colorful suitcases, and a map"
+      class="absolute inset-0 w-full h-full object-cover -z-10"
+      decoding="async"
+      height="1080"
+      loading="lazy"
+      src="https://storage.googleapis.com/a1aa/image/f0780dd9-1b38-4584-f76d-35dd5e3907a9.jpg"
+      width="1920"
+    />
+    <div
+      id="signupContainer"
+      class="bg-sky-200 bg-opacity-90 rounded-2xl border-4 border-indigo-400 shadow-lg shadow-indigo-400/70 max-w-md w-full p-8"
+    >
+      <h1
+        class="text-center text-gray-900 font-extrabold text-3xl mb-8 select-none"
+      >
+        SIGNUP
+      </h1>
+      <form id="signupForm" class="space-y-4" autocomplete="off" novalidate>
+        <div>
+          <label for="signupFirstname" class="block text-indigo-900 font-medium mb-1 select-none">Firstname</label>
+          <div class="flex items-center rounded-lg overflow-hidden">
+            <div
+              class="bg-indigo-400 px-4 py-3 flex items-center justify-center"
+            >
+              <i class="fas fa-user text-white text-lg"></i>
+            </div>
+            <input
+              id="signupFirstname"
+              name="firstname"
+              class="flex-1 py-3 px-4 rounded-r-lg bg-indigo-50 text-gray-900 placeholder-gray-700 focus:outline-none"
+              placeholder="Firstname"
+              type="text"
+              autocomplete="given-name"
+              aria-describedby="errorFirstname"
+              aria-invalid="false"
+            />
+          </div>
+          <p id="errorFirstname" class="text-red-600 text-sm mt-1 hidden select-none"></p>
+        </div>
+        <div>
+          <label for="signupEmail" class="block text-indigo-900 font-medium mb-1 select-none">Email</label>
+          <div class="flex items-center rounded-lg overflow-hidden">
+            <div
+              class="bg-indigo-400 px-4 py-3 flex items-center justify-center"
+            >
+              <i class="fas fa-at text-white text-lg"></i>
+            </div>
+            <input
+              id="signupEmail"
+              name="email"
+              class="flex-1 py-3 px-4 rounded-r-lg bg-indigo-50 text-gray-900 placeholder-gray-700 focus:outline-none"
+              placeholder="Email"
+              type="email"
+              autocomplete="email"
+              aria-describedby="errorEmail"
+              aria-invalid="false"
+            />
+          </div>
+          <p id="errorEmail" class="text-red-600 text-sm mt-1 hidden select-none"></p>
+        </div>
+        <div>
+          <label for="signupPassword" class="block text-indigo-900 font-medium mb-1 select-none">Password</label>
+          <div class="flex items-center rounded-lg overflow-hidden">
+            <div
+              class="bg-indigo-400 px-4 py-3 flex items-center justify-center"
+            >
+              <i class="fas fa-lock text-white text-lg"></i>
+            </div>
+            <input
+              id="signupPassword"
+              name="password"
+              class="flex-1 py-3 px-4 rounded-r-lg bg-indigo-50 text-gray-900 placeholder-gray-700 focus:outline-none"
+              placeholder="Password"
+              type="password"
+              autocomplete="new-password"
+              aria-describedby="errorPassword"
+              aria-invalid="false"
+            />
+          </div>
+          <p id="errorPassword" class="text-red-600 text-sm mt-1 hidden select-none"></p>
+        </div>
+        <div>
+          <label for="signupConfirmPassword" class="block text-indigo-900 font-medium mb-1 select-none">Confirm Password</label>
+          <div class="flex items-center rounded-lg overflow-hidden">
+            <div
+              class="bg-indigo-400 px-4 py-3 flex items-center justify-center"
+            >
+              <i class="fas fa-lock text-white text-lg"></i>
+            </div>
+            <input
+              id="signupConfirmPassword"
+              name="confirmPassword"
+              class="flex-1 py-3 px-4 rounded-r-lg bg-indigo-50 text-gray-900 placeholder-gray-700 focus:outline-none"
+              placeholder="Confirm Password"
+              type="password"
+              autocomplete="new-password"
+              aria-describedby="errorConfirmPassword"
+              aria-invalid="false"
+            />
+          </div>
+          <p id="errorConfirmPassword" class="text-red-600 text-sm mt-1 hidden select-none"></p>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-indigo-400 text-white font-bold py-3 rounded-full mt-6 hover:bg-indigo-500 transition-colors"
+        >
+          SIGNUP
+        </button>
+      </form>
+      <p class="text-center text-gray-900 mt-6 text-sm select-none">
+        Already have an Account?
+        <button
+          id="showLoginBtn"
+          class="text-indigo-400 hover:text-indigo-500 underline focus:outline-none"
+          type="button"
+        >
+          login
+        </button>
+      </p>
+    </div>
+
+    <div
+      id="loginContainer"
+      class="hidden bg-sky-200 bg-opacity-90 rounded-2xl border-4 border-indigo-400 shadow-lg shadow-indigo-400/70 max-w-md w-full p-8 relative"
+    >
+      <h1
+        class="text-center text-gray-900 font-extrabold text-3xl mb-8 select-none"
+      >
+        LOGIN
+      </h1>
+      <form id="loginForm" class="space-y-4" autocomplete="off" novalidate>
+        <div class="flex items-center rounded-lg overflow-hidden">
+          <div
+            class="bg-indigo-400 px-4 py-3 flex items-center justify-center"
+          >
+            <i class="fas fa-at text-white text-lg"></i>
+          </div>
+          <input
+            id="loginEmail"
+            name="email"
+            class="flex-1 py-3 px-4 rounded-r-lg bg-indigo-50 text-gray-900 placeholder-gray-700 focus:outline-none"
+            placeholder="Email"
+            type="email"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <div class="flex items-center rounded-lg overflow-hidden relative">
+          <div
+            class="bg-indigo-400 px-4 py-3 flex items-center justify-center"
+          >
+            <i class="fas fa-lock text-white text-lg"></i>
+          </div>
+          <input
+            id="loginPassword"
+            name="password"
+            class="flex-1 py-3 px-4 rounded-r-lg bg-indigo-50 text-gray-900 placeholder-gray-700 focus:outline-none"
+            placeholder="Password"
+            type="password"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-indigo-400 text-white font-bold py-3 rounded-full mt-6 hover:bg-indigo-500 transition-colors"
+        >
+          LOGIN
+        </button>
+      </form>
+      <p class="text-center text-gray-900 mt-6 text-sm select-none">
+        Don't have an Account?
+        <button
+          id="showSignupBtn"
+          class="text-indigo-400 hover:text-indigo-500 underline focus:outline-none"
+          type="button"
+        >
+          signup
+        </button>
+      </p>
+      <div id="forgotPasswordContainer" class="mt-4 text-center hidden">
+        <p class="text-red-700 mb-2 select-none">Incorrect password. Forgot your password?</p>
+        <button
+          id="forgotPasswordBtn"
+          class="text-indigo-600 hover:text-indigo-800 underline font-semibold focus:outline-none"
+          type="button"
+        >
+          Send reset link to your email
+        </button>
+        <p id="forgotPasswordMessage" class="mt-2 text-green-700 font-semibold select-none hidden"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Travel Diary Main Page -->
+  <div
+    id="travelMainPage"
+    class="hidden min-h-screen w-full p-6 bg-gradient-to-b from-sky-300 to-sky-100 overflow-auto transition-colors duration-500"
+  >
+    <header class="max-w-6xl mx-auto mb-8 flex items-center justify-between gap-4">
+      <h1
+        class="text-4xl font-extrabold text-indigo-900 select-none"
+      >
+        Travel Diary
+      </h1>
+      <nav class="flex items-center gap-2">
+        <button
+          id="darkModeToggleMain"
+          aria-label="Toggle Dark Mode"
+          class="hidden sm:flex bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-full transition-colors flex items-center gap-2 whitespace-nowrap"
+          type="button"
+        >
+          <i class="fas fa-moon"></i>
+          <span>Dark Mode</span>
+        </button>
+        <button
+          id="showEntriesBtn"
+          class="hidden sm:inline-block bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full transition-colors whitespace-nowrap"
+          type="button"
+        >
+          My Travel Entries
+        </button>
+        <button
+          id="goToProfileBtn"
+          class="hidden sm:inline-block bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full transition-colors whitespace-nowrap"
+          type="button"
+        >
+          My Profile
+        </button>
+        <button
+          id="logoutBtnMain"
+          class="hidden sm:inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition-colors whitespace-nowrap"
+          type="button"
+        >
+          Logout
+        </button>
+
+        <!-- Mobile menu button -->
+        <div class="sm:hidden relative" id="mobileMenuContainer">
+          <button id="mobileMenuBtn" aria-label="Open menu" class="bg-indigo-400 hover:bg-indigo-500 text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600">
+            <i class="fas fa-bars text-lg"></i>
+          </button>
+          <div id="mobileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-indigo-300 dark:border-gray-600 z-50">
+            <button
+              id="mobileDarkModeToggle"
+              aria-label="Toggle Dark Mode"
+              class="w-full text-left px-4 py-2 hover:bg-indigo-100 dark:hover:bg-gray-700 flex items-center gap-2 text-indigo-900 dark:text-indigo-300"
+              type="button"
+            >
+              <i class="fas fa-moon"></i>
+              <span>Dark Mode</span>
+            </button>
+            <button
+              id="mobileShowEntriesBtn"
+              class="w-full text-left px-4 py-2 hover:bg-indigo-100 dark:hover:bg-gray-700 text-indigo-900 dark:text-indigo-300"
+              type="button"
+            >
+              My Travel Entries
+            </button>
+            <button
+              id="mobileGoToProfileBtn"
+              class="w-full text-left px-4 py-2 hover:bg-indigo-100 dark:hover:bg-gray-700 text-indigo-900 dark:text-indigo-300"
+              type="button"
+            >
+              My Profile
+            </button>
+            <button
+              id="mobileLogoutBtnMain"
+              class="w-full text-left px-4 py-2 hover:bg-red-600 hover:text-white dark:hover:bg-red-700 text-red-600 dark:text-red-400 font-bold"
+              type="button"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+      <section class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-w-md mx-auto">
+        <h2
+          class="text-2xl font-semibold text-indigo-900 dark:text-indigo-300 mb-4 select-none text-center"
+        >
+          Add New Travel Entry
+        </h2>
+        <form id="travelForm" class="space-y-4" autocomplete="off" enctype="multipart/form-data" novalidate>
+          <div>
+            <label
+              for="location"
+              class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1"
+              >Location</label
+            >
+            <input
+              id="location"
+              name="location"
+              type="text"
+              required
+              class="w-full border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-indigo-200"
+              placeholder="Where did you travel?"
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label
+              for="date"
+              class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1"
+              >Date</label
+            >
+            <input
+              id="date"
+              name="date"
+              type="date"
+              required
+              class="w-full border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-indigo-200"
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label
+              for="notes"
+              class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1"
+              >Notes</label
+            >
+            <textarea
+              id="notes"
+              name="notes"
+              rows="4"
+              placeholder="Write your travel memories here..."
+              class="w-full border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-indigo-200"
+              autocomplete="off"
+            ></textarea>
+          </div>
+          <div>
+            <label
+              for="image"
+              class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1"
+              >Add Image(s) (optional)</label
+            >
+            <input
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              multiple
+              class="w-full text-indigo-900 dark:text-indigo-200 dark:bg-gray-700"
+            />
+            <div id="imagePreviewContainer" class="flex flex-wrap gap-2 mt-2"></div>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-indigo-400 text-white font-bold py-3 rounded-full mt-6 hover:bg-indigo-500 transition-colors"
+          >
+            Add Entry
+          </button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Travel Diary Entries Page -->
+  <div
+    id="travelEntriesPage"
+    class="hidden min-h-screen w-full p-6 bg-gradient-to-b from-sky-300 to-sky-100 overflow-auto transition-colors duration-500"
+  >
+    <header class="max-w-6xl mx-auto mb-8 flex items-center justify-between gap-4">
+      <h1
+        class="text-4xl font-extrabold text-indigo-900 select-none"
+      >
+        Your Travel Entries
+      </h1>
+      <nav class="flex items-center gap-2">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search by location"
+          class="hidden sm:block px-3 py-2 rounded-md border border-indigo-300 dark:border-indigo-600 dark:bg-gray-700 dark:text-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 w-full max-w-xs"
+          autocomplete="off"
+          aria-label="Search travel entries by location"
+        />
+        <button
+          id="darkModeToggleEntries"
+          aria-label="Toggle Dark Mode"
+          class="hidden sm:flex bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-full transition-colors flex items-center gap-2 whitespace-nowrap"
+          type="button"
+        >
+          <i class="fas fa-moon"></i>
+          <span>Dark Mode</span>
+        </button>
+        <button
+          id="backToMainBtn"
+          class="hidden sm:inline-block bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full transition-colors whitespace-nowrap"
+          type="button"
+        >
+          Back to Main
+        </button>
+        <button
+          id="logoutBtnEntries"
+          class="hidden sm:inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition-colors whitespace-nowrap"
+          type="button"
+        >
+          Logout
+        </button>
+
+        <!-- Mobile menu button -->
+        <div class="sm:hidden relative" id="mobileMenuContainerEntries">
+          <button id="mobileMenuBtnEntries" aria-label="Open menu" class="bg-indigo-400 hover:bg-indigo-500 text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600">
+            <i class="fas fa-bars text-lg"></i>
+          </button>
+          <div id="mobileMenuEntries" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-indigo-300 dark:border-gray-600 z-50">
+            <input
+              id="mobileSearchInput"
+              type="text"
+              placeholder="Search by location"
+              class="block px-3 py-2 rounded-md border border-indigo-300 dark:border-indigo-600 dark:bg-gray-700 dark:text-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 w-full"
+              autocomplete="off"
+              aria-label="Search travel entries by location"
+            />
+            <button
+              id="mobileDarkModeToggleEntries"
+              aria-label="Toggle Dark Mode"
+              class="w-full text-left px-4 py-2 hover:bg-indigo-100 dark:hover:bg-gray-700 flex items-center gap-2 text-indigo-900 dark:text-indigo-300"
+              type="button"
+            >
+              <i class="fas fa-moon"></i>
+              <span>Dark Mode</span>
+            </button>
+            <button
+              id="mobileBackToMainBtn"
+              class="w-full text-left px-4 py-2 hover:bg-indigo-100 dark:hover:bg-gray-700 text-indigo-900 dark:text-indigo-300"
+              type="button"
+            >
+              Back to Main
+            </button>
+            <button
+              id="mobileLogoutBtnEntries"
+              class="w-full text-left px-4 py-2 hover:bg-red-600 hover:text-white dark:hover:bg-red-700 text-red-600 dark:text-red-400 font-bold"
+              type="button"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+      <section class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+        <ul id="entriesList" class="space-y-6 max-h-[700px] overflow-y-auto">
+          <!-- Travel entries will appear here -->
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- Profile Page -->
+  <div
+    id="profilePage"
+    class="hidden min-h-screen w-full p-6 bg-gradient-to-b from-sky-300 to-sky-100 overflow-auto transition-colors duration-500"
+  >
+    <header class="max-w-6xl mx-auto mb-8 flex items-center justify-between gap-4">
+      <h1
+        class="text-4xl font-extrabold text-indigo-900 select-none"
+      >
+        My Profile
+      </h1>
+      <nav class="flex items-center gap-2">
+        <button
+          id="darkModeToggleProfile"
+          aria-label="Toggle Dark Mode"
+          class="hidden sm:flex bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-full transition-colors flex items-center gap-2 whitespace-nowrap"
+          type="button"
+        >
+          <i class="fas fa-moon"></i>
+          <span>Dark Mode</span>
+        </button>
+        <button
+          id="backToMainFromProfileBtn"
+          class="hidden sm:inline-block bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full transition-colors whitespace-nowrap"
+          type="button"
+        >
+          Back to Main
+        </button>
+        <button
+          id="logoutBtnProfile"
+          class="hidden sm:inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition-colors whitespace-nowrap"
+          type="button"
+        >
+          Logout
+        </button>
+
+        <!-- Mobile menu button -->
+        <div class="sm:hidden relative" id="mobileMenuContainerProfile">
+          <button id="mobileMenuBtnProfile" aria-label="Open menu" class="bg-indigo-400 hover:bg-indigo-500 text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600">
+            <i class="fas fa-bars text-lg"></i>
+          </button>
+          <div id="mobileMenuProfile" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-indigo-300 dark:border-gray-600 z-50">
+            <button
+              id="mobileDarkModeToggleProfile"
+              aria-label="Toggle Dark Mode"
+              class="w-full text-left px-4 py-2 hover:bg-indigo-100 dark:hover:bg-gray-700 flex items-center gap-2 text-indigo-900 dark:text-indigo-300"
+              type="button"
+            >
+              <i class="fas fa-moon"></i>
+              <span>Dark Mode</span>
+            </button>
+            <button
+              id="mobileBackToMainFromProfileBtn"
+              class="w-full text-left px-4 py-2 hover:bg-indigo-100 dark:hover:bg-gray-700 text-indigo-900 dark:text-indigo-300"
+              type="button"
+            >
+              Back to Main
+            </button>
+            <button
+              id="mobileLogoutBtnProfile"
+              class="w-full text-left px-4 py-2 hover:bg-red-600 hover:text-white dark:hover:bg-red-700 text-red-600 dark:text-red-400 font-bold"
+              type="button"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+      <section class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-w-md mx-auto">
+        <h2
+          class="text-2xl font-semibold text-indigo-900 dark:text-indigo-300 mb-4 select-none text-center"
+        >
+          Your Profile
+        </h2>
+        <div id="profileSection" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+            <label for="profileFirstname" class="w-32 font-medium text-indigo-900 dark:text-indigo-300">Firstname</label>
+            <input type="text" id="profileFirstname" class="flex-1 border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-indigo-200" />
+          </div>
+          <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+            <label for="profileEmail" class="w-32 font-medium text-indigo-900 dark:text-indigo-300">Email</label>
+            <input type="email" id="profileEmail" disabled class="flex-1 border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 bg-indigo-100 dark:bg-gray-700 text-indigo-700 dark:text-indigo-300 cursor-not-allowed" />
+          </div>
+          <div class="flex items-center gap-4 justify-center flex-wrap">
+            <button id="saveProfileBtn" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full transition-colors" type="button">Save Profile</button>
+            <button id="togglePublicProfileBtn" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full transition-colors" type="button">Make Profile Public</button>
+          </div>
+          <p id="publicProfileStatus" class="text-indigo-700 dark:text-indigo-300 font-semibold select-none text-center"></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Edit Entry Modal -->
+  <div id="editEntryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+      <button id="closeEditModalBtn" aria-label="Close Edit Entry Modal" class="absolute top-3 right-3 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white text-2xl font-bold focus:outline-none">&times;</button>
+      <h2 class="text-2xl font-semibold text-indigo-900 dark:text-indigo-300 mb-4 select-none text-center">Edit Travel Entry</h2>
+      <form id="editEntryForm" class="space-y-4" autocomplete="off" enctype="multipart/form-data" novalidate>
+        <div>
+          <label for="editLocation" class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1">Location</label>
+          <input id="editLocation" name="editLocation" type="text" required class="w-full border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-indigo-200" autocomplete="off" />
+        </div>
+        <div>
+          <label for="editDate" class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1">Date</label>
+          <input id="editDate" name="editDate" type="date" required class="w-full border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-indigo-200" autocomplete="off" />
+        </div>
+        <div>
+          <label for="editNotes" class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1">Notes</label>
+          <textarea id="editNotes" name="editNotes" rows="4" class="w-full border border-indigo-300 dark:border-indigo-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-indigo-200" autocomplete="off"></textarea>
+        </div>
+        <div>
+          <label for="editImages" class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1">Add More Images</label>
+          <input id="editImages" name="editImages" type="file" accept="image/*" multiple class="w-full text-indigo-900 dark:text-indigo-200 dark:bg-gray-700" />
+        </div>
+        <div class="mb-4">
+          <label class="block font-medium text-indigo-900 dark:text-indigo-300 mb-1">Existing Images</label>
+          <div id="existingImagesContainer" class="flex flex-wrap gap-2 modal-images-container max-h-48 overflow-x-auto"></div>
+        </div>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <button type="submit" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full transition-colors">Save Changes</button>
+          <button type="button" id="cancelEditBtn" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-full transition-colors">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+        <script src="script.js" async defer></script>
+
+</body>
+</html>
